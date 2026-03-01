@@ -1,4 +1,4 @@
-**PORTUGUESE SKULL ALERT IN GALICIA**
+## PORTUGUESE SKULL ALERT IN GALICIA
 
 Real-time monitoring of jellyfish hazards in Galicia using OpenWeather API, InfluxDB, and Grafana.
 
