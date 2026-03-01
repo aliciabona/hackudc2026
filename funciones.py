@@ -5,10 +5,10 @@ from influxdb_client.client.write_api import SYNCHRONOUS
 
 # Conf influxdb
 
-URL_INFLUX = "http://127.0.0.1:8086"
-TOKEN = "jo2VDPyQTSqTOyXkdhvHBsajtoGhnHfSMcj82cGr4bn32EJj0LrPh1UkNoVAd6DW_QiSCBLe6-74pcO2AxXekg=="
-ORG = "elb"
-BUCKET = "jellyfish"
+URL_INFLUX = "http://..."
+TOKEN = "YourName"
+ORG = "ORG"
+BUCKET = "BucketName"
 
 # Playas y coordenadas
 
