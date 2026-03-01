@@ -1,0 +1,742 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "dfel8k61fnv28d"
+      },
+      "description": "Map that shows the area affected.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 10,
+        "x": 0,
+        "y": 0
+      },
+      "id": 14,
+      "options": {
+        "basemap": {
+          "config": {},
+          "name": "Layer 0",
+          "noRepeat": false,
+          "type": "default"
+        },
+        "controls": {
+          "mouseWheelZoom": true,
+          "showAttribution": true,
+          "showDebug": false,
+          "showMeasure": false,
+          "showScale": true,
+          "showZoom": true
+        },
+        "layers": [
+          {
+            "config": {
+              "showLegend": false,
+              "style": {
+                "color": {
+                  "fixed": "purple"
+                },
+                "opacity": 0.5,
+                "rotation": {
+                  "fixed": 0,
+                  "max": 360,
+                  "min": -360,
+                  "mode": "mod"
+                },
+                "size": {
+                  "fixed": 30,
+                  "max": 15,
+                  "min": 2
+                },
+                "symbol": {
+                  "fixed": "img/icons/marker/circle.svg",
+                  "mode": "fixed"
+                },
+                "symbolAlign": {
+                  "horizontal": "center",
+                  "vertical": "center"
+                },
+                "text": {
+                  "field": "Time",
+                  "fixed": "",
+                  "mode": "fixed"
+                },
+                "textConfig": {
+                  "fontSize": 12,
+                  "offsetX": 0,
+                  "offsetY": 0,
+                  "textAlign": "center",
+                  "textBaseline": "middle"
+                }
+              }
+            },
+            "filterData": {
+              "id": "byRefId",
+              "options": "A"
+            },
+            "layer-tooltip": false,
+            "location": {
+              "latitude": "lat {_start=\"2026-01-30 00:42:31.683 +0000 UTC\", _stop=\"2026-03-01 00:42:31.683 +0000 UTC\", ubicacion=\"A Lanzada (O Grove)\"}",
+              "longitude": "lon {_start=\"2026-01-30 00:42:31.683 +0000 UTC\", _stop=\"2026-03-01 00:42:31.683 +0000 UTC\", ubicacion=\"A Lanzada (O Grove)\"}",
+              "mode": "auto"
+            },
+            "name": "Layer1",
+            "tooltip": true,
+            "type": "markers"
+          }
+        ],
+        "tooltip": {
+          "mode": "details"
+        },
+        "view": {
+          "allLayers": true,
+          "id": "coords",
+          "lat": 42.750689,
+          "lon": -8.174672,
+          "noRepeat": false,
+          "shared": false,
+          "zoom": 7.62
+        }
+      },
+      "pluginVersion": "12.4.0",
+      "targets": [
+        {
+          "query": "from(bucket: \"jellyfish\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"peligrosidad_medusas\")\n  |> filter(fn: (r) => r[\"_field\"] == \"lat\" or r[\"_field\"] == \"lon\" or r[\"_field\"] == \"indice_riesgo\")\n  |> filter(fn: (r) => r[\"ubicacion\"] == \"${Praia}\")\n  |> last()\n  |> pivot(rowKey:[\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")",
+          "refId": "A"
+        }
+      ],
+      "title": "Map",
+      "type": "geomap"
+    },
+    {
+      "description": "Drawing of a Portuguese skull.",
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 3,
+        "x": 10,
+        "y": 0
+      },
+      "id": 18,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "<img src=\"https://www3.gobiernodecanarias.org/medusa/wiki/images/6/6d/Aguaviva.png\" width=\"75%\">",
+        "mode": "markdown"
+      },
+      "pluginVersion": "12.4.0",
+      "title": "Portuguese Skull",
+      "transparent": true,
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "dfel8k61fnv28d"
+      },
+      "description": "Estimation of the number of this species. ",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "max": 10,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "semi-dark-green",
+                "value": 0
+              },
+              {
+                "color": "yellow",
+                "value": 4
+              },
+              {
+                "color": "orange",
+                "value": 6
+              },
+              {
+                "color": "dark-red",
+                "value": 8
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 11,
+        "x": 13,
+        "y": 0
+      },
+      "id": 6,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "12.4.0",
+      "targets": [
+        {
+          "query": "from(bucket: \"jellyfish\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"peligrosidad_medusas\")\n  |> filter(fn: (r) => r._field == \"indice_riesgo\")\n  |> filter(fn: (r) => r.ubicacion == \"${Praia}\")\n  |> last()",
+          "refId": "A"
+        }
+      ],
+      "title": "Portuguese Skull Level",
+      "transparent": true,
+      "type": "gauge"
+    },
+    {
+      "description": "Legend for the estimation of the Portuguese Skull.",
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 3,
+        "x": 10,
+        "y": 8
+      },
+      "id": 17,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "\n🟢 No danger — Optimal conditions for swimming    \n🟡 Low risk — Caution recommended    \n🟠 Risk — Swimming not recommended    \n🔴 High risk — Swimming prohibited",
+        "mode": "markdown"
+      },
+      "pluginVersion": "12.4.0",
+      "title": "Legend",
+      "transparent": true,
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "dfel8k61fnv28d"
+      },
+      "description": "Water temperature in Celsius.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-blue",
+                "value": 0
+              },
+              {
+                "color": "dark-yellow",
+                "value": 14.1
+              },
+              {
+                "color": "dark-orange",
+                "value": 18.1
+              },
+              {
+                "color": "dark-red",
+                "value": 22.1
+              }
+            ]
+          },
+          "unit": "celsius"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 5,
+        "x": 0,
+        "y": 15
+      },
+      "id": 8,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.4.0",
+      "targets": [
+        {
+          "query": "from(bucket: \"jellyfish\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"peligrosidad_medusas\")\n  |> filter(fn: (r) => r._field == \"temp_agua\")\n  |> filter(fn: (r) => r.ubicacion == \"${Praia}\")\n  |> last()",
+          "refId": "A"
+        }
+      ],
+      "title": "Water Temperature",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "dfel8k61fnv28d"
+      },
+      "description": "Wave height In meters.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "#69447c",
+            "mode": "shades"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "lengthm"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 5,
+        "x": 5,
+        "y": 15
+      },
+      "id": 7,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.4.0",
+      "targets": [
+        {
+          "query": "from(bucket: \"jellyfish\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"peligrosidad_medusas\")\n  |> filter(fn: (r) => r._field == \"altura_olas\")\n  |> filter(fn: (r) => r.ubicacion == \"${Praia}\")\n  |> last()",
+          "refId": "A"
+        }
+      ],
+      "title": "Wave Height",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "dfel8k61fnv28d"
+      },
+      "description": "Forecast with emojis.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "index": 0,
+                  "text": "☀️"
+                },
+                "1": {
+                  "index": 1,
+                  "text": "⛅"
+                },
+                "2": {
+                  "index": 2,
+                  "text": "⛅"
+                },
+                "3": {
+                  "index": 3,
+                  "text": "☁️"
+                },
+                "61": {
+                  "index": 4,
+                  "text": "🌧️"
+                },
+                "63": {
+                  "index": 5,
+                  "text": "🌧️"
+                },
+                "65": {
+                  "index": 6,
+                  "text": "🌧️"
+                },
+                "80": {
+                  "index": 7,
+                  "text": "🌧️"
+                },
+                "81": {
+                  "index": 8,
+                  "text": "🌧️"
+                },
+                "82": {
+                  "index": 9,
+                  "text": "🌧️"
+                },
+                "95": {
+                  "index": 10,
+                  "text": "⛈️"
+                },
+                "96": {
+                  "index": 11,
+                  "text": "⛈️"
+                },
+                "99": {
+                  "index": 12,
+                  "text": "⛈️"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "clima_cod"
+            },
+            "properties": []
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 4,
+        "x": 10,
+        "y": 15
+      },
+      "id": 15,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.4.0",
+      "targets": [
+        {
+          "query": "from(bucket: \"jellyfish\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"peligrosidad_medusas\")\n  |> filter(fn: (r) => r._field == \"clima_cod\")\n  |> filter(fn: (r) => r.ubicacion == \"${Praia}\")\n  |> last()",
+          "refId": "A"
+        }
+      ],
+      "title": "Weather",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "dfel8k61fnv28d"
+      },
+      "description": "Wind speed (m/s)  and direction (cardinal).",
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 6,
+        "x": 14,
+        "y": 15
+      },
+      "id": 9,
+      "options": {
+        "cardinalLabels": "cardinal",
+        "colorPalette": "default",
+        "doesLegendOverlay": false,
+        "legendAnchor": "center",
+        "legendPosition": "left",
+        "petalsPer90Deg": 8,
+        "showLegend": true,
+        "speedBucketsCount": 8,
+        "speedBucketsSize": 2,
+        "speedBucketsSizeAuto": false,
+        "tooltipDecimalPlaces": 1,
+        "windSpeedUnit": "ms",
+        "windroseLabels": "compass"
+      },
+      "pluginVersion": "1.2.0",
+      "targets": [
+        {
+          "query": "from(bucket: \"jellyfish\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"peligrosidad_medusas\")\n  |> filter(fn: (r) => r._field == \"viento_dir\" or r._field == \"viento_vel\")\n  |> filter(fn: (r) => r.ubicacion == \"${Praia}\")\n  |> pivot(\n      rowKey: [\"_time\"],\n      columnKey: [\"_field\"],\n      valueColumn: \"_value\"\n  )\n  |> rename(columns: {\n      viento_vel: \"wind_speed\",\n      viento_dir: \"wind_direction\"\n  })",
+          "refId": "A"
+        }
+      ],
+      "title": "WInd",
+      "type": "operato-windrose-panel"
+    },
+    {
+      "description": "Date when the data were collected.",
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 4,
+        "x": 20,
+        "y": 15
+      },
+      "id": 13,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "\n# ${__from:date:YYYY-MM-DD} || ${__from:date:HH:mm}\n\n",
+        "mode": "markdown"
+      },
+      "pluginVersion": "12.4.0",
+      "title": "Date of the data",
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "dfel8k61fnv28d"
+      },
+      "description": "Plankton level between 0-1.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "fieldMinMax": false,
+          "mappings": [],
+          "max": 1,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#425c3f",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 20,
+        "y": 18
+      },
+      "id": 10,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "12.4.0",
+      "targets": [
+        {
+          "query": "from(bucket: \"jellyfish\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"peligrosidad_medusas\")\n  |> filter(fn: (r) => r._field == \"nivel_plancton\")\n  |> filter(fn: (r) => r.ubicacion == \"${Praia}\")\n  |> last()",
+          "refId": "A"
+        }
+      ],
+      "title": "Plankton Level",
+      "type": "gauge"
+    }
+  ],
+  "preload": false,
+  "schemaVersion": 42,
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "allowCustomValue": false,
+        "current": {
+          "text": "A Lanzada (O Grove)",
+          "value": "A Lanzada (O Grove)"
+        },
+        "datasource": {
+          "type": "influxdb",
+          "uid": "dfel8k61fnv28d"
+        },
+        "definition": "import \"influxdata/influxdb/schema\"\n\nschema.tagValues(\n    bucket: \"jellyfish\",\n    tag: \"ubicacion\",\n    start: -30d\n)",
+        "includeAll": false,
+        "name": "Praia",
+        "options": [],
+        "query": {
+          "query": "import \"influxdata/influxdb/schema\"\n\nschema.tagValues(\n    bucket: \"jellyfish\",\n    tag: \"ubicacion\",\n    start: -30d\n)"
+        },
+        "refresh": 1,
+        "regex": "",
+        "regexApplyTo": "value",
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "text": "3",
+          "value": "3"
+        },
+        "datasource": {
+          "type": "influxdb",
+          "uid": "dfel8k61fnv28d"
+        },
+        "definition": "from(bucket: \"jellyfish\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"peligrosidad_medusas\")\n  |> filter(fn: (r) => r._field == \"clima_cod\")\n  |> filter(fn: (r) => r.ubicacion == \"${Praia}\")\n  |> last()\n  |> keep(columns: [\"_value\"])",
+        "hide": 2,
+        "name": "clima_cod",
+        "options": [],
+        "query": {
+          "query": "from(bucket: \"jellyfish\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"peligrosidad_medusas\")\n  |> filter(fn: (r) => r._field == \"clima_cod\")\n  |> filter(fn: (r) => r.ubicacion == \"${Praia}\")\n  |> last()\n  |> keep(columns: [\"_value\"])"
+        },
+        "refresh": 1,
+        "regex": "",
+        "regexApplyTo": "value",
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-30d",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "jellyfish",
+  "uid": "ad76n42",
+  "version": 41,
+  "weekStart": ""
+}
