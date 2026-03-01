@@ -1,8 +1,7 @@
 **PORTUGUESE SKULL ALERT IN GALICIA**
 
-Real-time monotoring of jellyfish hazards using Open Meteo API, InfluxDB and Grafana.
+Real-time monitoring of jellyfish hazards using the Open Weather API, InfluxDB, and Grafana.
 
-Tech Stack: python3, influxdb 2.x, grafana.
+Tech stack: Python 3, InfluxDB 2.x, Grafana.
 
-Monitores 12 locations (via coordinates).
-
+Monitors 12 locations via coordinates.
